@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+@import "tailwindcss";
+
+* {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+@theme {
+  --color-main-color: #2671fe;
+}
+
+.btn-primary {
+  @apply flex items-center space-x-2 px-4 py-2 rounded-lg bg-[#2671fe] hover:bg-blue-600 text-white transition-colors duration-200 cursor-pointer;
+}
+
+.btn-secondary {
+  @apply flex items-center space-x-2 px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white transition-colors duration-200 cursor-pointer;
+}
+
+.btn-danger {
+  @apply flex items-center gap-2 space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 cursor-pointer;
+  @apply bg-red-500 hover:bg-red-600 text-white;
+}
+
+a {
+  text-decoration: none;
+}
+
+.app {
+  /* background: #f1f1f1; */
+  /* min-height:  130vh; */
+}
+
+button:disabled {
+  background: #ccc !important;
+  cursor: not-allowed !important;
+}

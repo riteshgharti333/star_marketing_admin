@@ -1,0 +1,57 @@
+.layout {
+  padding: 20px;
+  max-width: 1600px;
+  margin: auto;
+
+  .layout-container {
+    display: grid;
+    grid-template-columns: 270px auto;
+    gap: 20px;
+
+    .layout-right {
+      // Your existing styles
+    }
+
+    .layout-left {
+      // Your existing styles
+    }
+  }
+}
+
+// Mobile styles
+@media (max-width: 768px) {
+  .layout {
+    padding: 10px;
+
+    .layout-container {
+      grid-template-columns: 1fr;
+      position: relative;
+
+      .layout-left {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.5);
+
+        &.mobile-open {
+          display: block;
+          width: 100%;
+
+          > div { // Target the Sidebar component
+            width: 270px;
+            height: 100%;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+          }
+        }
+      }
+
+      .layout-right {
+        grid-column: 1;
+      }
+    }
+  }
+}
