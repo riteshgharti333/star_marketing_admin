@@ -1,21 +1,56 @@
 import { FiArrowLeft, FiTrash2 } from "react-icons/fi";
 import { useBackPage } from "../../utils/backFunc";
+import { toast } from "sonner";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+
+import axios from "axios";
+import { useState } from "react";
+import { baseUrl } from "../../main";
+import DeleteCard from "../../components/DeleteCard/DeleteCard";
 
 const SingleContact = ({ isDarkMode }) => {
   const backPage = useBackPage();
 
-  // Sample content data
-  const content = {
-    name: "John Doe",
-    businessName: "Acme Corporation",
-    email: "john.doe@acme.com",
-    contactNumber: "+1 (555) 123-4567",
-    projectType: "E-commerce Website Development",
-    projectDescription:
-      "We need a complete e-commerce solution with custom product configurations, integrated payment processing, and mobile-responsive design. The platform should handle at least 10,000 products with advanced search and filtering capabilities.",
-    budget: "$20,000 - $50,000",
-    referralSource: "Google Search",
+  const [contact, setContact] = useState({});
+
+  const { id } = useParams();
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
+
+  useEffect(() => {
+    const fetchContact = async () => {
+      try {
+        const { data } = await axios.get(`${baseUrl}/contact/${id}`);
+        console.log(data);
+        setContact(data.contact);
+      } catch (error) {
+        console.error("❌ Error fetching contact:", error);
+        toast.error(error.response.data.mesage);
+      }
+    };
+
+    fetchContact();
+  }, [id]);
+
+  const {
+    name,
+    email,
+    phoneNumber,
+    businessName,
+    projectType,
+    projectDescription,
+    budget,
+    heardAboutUs,
+  } = contact;
+
+
+   const deleteMessage = {
+    title: "Delete Contact",
+    desc: "Are you sure you want to delete this contact.",
   };
+
 
   return (
     <div className={`min-h-screen`}>
@@ -45,7 +80,10 @@ const SingleContact = ({ isDarkMode }) => {
                 Review Details
               </h1>
             </div>
-            <button className="btn-danger">
+            <button  onClick={() => {
+              setDeleteId(id);
+              setShowDeleteModal(true);
+            }} className="btn-danger">
               <FiTrash2 size={18} /> Delete
             </button>
           </div>
@@ -80,7 +118,7 @@ const SingleContact = ({ isDarkMode }) => {
                     isDarkMode ? "text-white" : "text-gray-800"
                   }`}
                 >
-                  {content.name}
+                  {name}
                 </p>
               </div>
               <div>
@@ -96,7 +134,7 @@ const SingleContact = ({ isDarkMode }) => {
                     isDarkMode ? "text-white" : "text-gray-800"
                   }`}
                 >
-                  {content.businessName}
+                  {businessName}
                 </p>
               </div>
               <div>
@@ -112,7 +150,7 @@ const SingleContact = ({ isDarkMode }) => {
                     isDarkMode ? "text-white" : "text-gray-800"
                   }`}
                 >
-                  {content.email}
+                  {email}
                 </p>
               </div>
               <div>
@@ -128,7 +166,7 @@ const SingleContact = ({ isDarkMode }) => {
                     isDarkMode ? "text-white" : "text-gray-800"
                   }`}
                 >
-                  {content.contactNumber}
+                  {phoneNumber}
                 </p>
               </div>
             </div>
@@ -161,7 +199,7 @@ const SingleContact = ({ isDarkMode }) => {
                     isDarkMode ? "text-white" : "text-gray-800"
                   }`}
                 >
-                  {content.projectType}
+                  {projectType}
                 </p>
               </div>
               <div>
@@ -177,7 +215,7 @@ const SingleContact = ({ isDarkMode }) => {
                     isDarkMode ? "text-gray-300" : "text-gray-700"
                   }`}
                 >
-                  {content.projectDescription}
+                  {projectDescription}
                 </p>
               </div>
               <div>
@@ -193,7 +231,7 @@ const SingleContact = ({ isDarkMode }) => {
                     isDarkMode ? "text-white" : "text-gray-800"
                   }`}
                 >
-                  {content.budget}
+                  {budget}
                 </p>
               </div>
               <div>
@@ -209,13 +247,22 @@ const SingleContact = ({ isDarkMode }) => {
                     isDarkMode ? "text-white" : "text-gray-800"
                   }`}
                 >
-                  {content.referralSource}
+                  {heardAboutUs}
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
+        {showDeleteModal && (
+        <DeleteCard
+          onClose={() => setShowDeleteModal(false)}
+          isDarkMode={isDarkMode}
+          deleteMessage={deleteMessage}
+          deleteId={deleteId}
+          path="contact"
+        />
+      )}
     </div>
   );
 };

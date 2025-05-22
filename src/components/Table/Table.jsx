@@ -34,7 +34,7 @@ const Table = ({ data, columns, path, isDarkMode }) => {
   const handleRowClick = (id) => {
     path === "review" && navigate(`/review/${id}`);
     path === "project" && navigate(`/project/${id}`);
-    path === "contact" && navigate(`/contact/${1}`);
+    path === "contact" && navigate(`/contact/${id}`);
     path === "service" && navigate(`/service/${id}`);
   };
 

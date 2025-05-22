@@ -22,7 +22,7 @@ const Navbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    console.log("hello");
+   
 
     try {
       const { data } = await axios.post(`${baseUrl}/auth/logout`, {

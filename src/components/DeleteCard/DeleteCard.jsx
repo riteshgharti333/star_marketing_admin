@@ -28,6 +28,8 @@ const DeleteCard = ({
           navigate("/project");
         } else if (path === "service") {
           navigate("/service");
+        } else if (path === "contact") {
+          navigate("/contacts");
         } else {
           onConfirm();
         }

@@ -9,7 +9,6 @@ import { baseUrl } from "../../main";
 const Review = ({ isDarkMode }) => {
   const [reviewData, setReviewData] = useState([]);
 
-  console.log(isDarkMode)
 
   useEffect(() => {
     const reviewAllData = async () => {
