@@ -9,14 +9,13 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
 const NewPartnerCards = ({ isDarkMode }) => {
- 
-   const backPage = useBackPage();
+  const backPage = useBackPage();
   const navigate = useNavigate();
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
-  const [loading , setLoading] = useState(false);
-    
+  const [loading, setLoading] = useState(false);
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -31,7 +30,7 @@ const NewPartnerCards = ({ isDarkMode }) => {
       return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
     const formData = new FormData();
     formData.append("image", selectedImage);
@@ -40,6 +39,7 @@ const NewPartnerCards = ({ isDarkMode }) => {
       const { data } = await axios.post(
         `${baseUrl}/partner-card/new-partner-card`,
         formData,
+        { withCredentials: true },
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -54,12 +54,10 @@ const NewPartnerCards = ({ isDarkMode }) => {
     } catch (error) {
       console.error("Upload error:", error);
       toast.error(error.response.data.message);
-    }finally{
-       setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
-
-
 
   return (
     <div
@@ -149,7 +147,6 @@ const NewPartnerCards = ({ isDarkMode }) => {
 
       {/* Action Buttons */}
 
-
       <div className="flex justify-center space-x-3">
         <input
           type="file"
@@ -168,8 +165,11 @@ const NewPartnerCards = ({ isDarkMode }) => {
           <span>Add Image</span>
         </button>
 
-      
-        <button className={`btn-primary`} disabled={loading} onClick={handleSubmit}>
+        <button
+          className={`btn-primary`}
+          disabled={loading}
+          onClick={handleSubmit}
+        >
           <span>{loading ? "Uploading..." : "Upload"}</span>
         </button>
       </div>

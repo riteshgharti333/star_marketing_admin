@@ -8,7 +8,7 @@ import axios from "axios";
 import { baseUrl } from "../../main";
 import { toast } from "sonner";
 
-const UpdateReview = ({isDarkMode}) => {
+const UpdateReview = ({ isDarkMode }) => {
   const backPage = useBackPage();
   const { id } = useParams();
 
@@ -59,11 +59,16 @@ const UpdateReview = ({isDarkMode}) => {
         formData.append("image", fileInputRef.current.files[0]);
       }
 
-      const { data } = await axios.put(`${baseUrl}/review/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const { data } = await axios.put(
+        `${baseUrl}/review/${id}`,
+        formData,
+        { withCredentials: true },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (data.success) {
         toast.success(data.message);
@@ -78,9 +83,7 @@ const UpdateReview = ({isDarkMode}) => {
   };
 
   return (
-    <div
-      className={`min-h-screen`}
-    >
+    <div className={`min-h-screen`}>
       <div
         className={`p-2 sm:p-6 rounded-xl ${
           isDarkMode ? "bg-gray-800" : "bg-white"

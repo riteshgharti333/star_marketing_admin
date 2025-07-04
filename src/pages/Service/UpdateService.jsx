@@ -95,9 +95,7 @@ const UpdateService = ({ isDarkMode = false }) => {
       ...prev,
       [section]: {
         ...prev[section],
-        items: [
-          ...prev[section].items,
-        ],
+        items: [...prev[section].items],
       },
     }));
   };
@@ -117,15 +115,14 @@ const UpdateService = ({ isDarkMode = false }) => {
     const file = e.target.files[0];
     if (!file) return;
 
-      // For flat fields like bannerImage
-      setFormData((prev) => ({
-        ...prev,
-        [section]: {
-          ...prev[section],
-          [field]: file,
-        },
-      }));
-    
+    // For flat fields like bannerImage
+    setFormData((prev) => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        [field]: file,
+      },
+    }));
   };
 
   const sections = [
@@ -172,7 +169,7 @@ const UpdateService = ({ isDarkMode = false }) => {
               title: singleData.benefits?.title || "",
               items: singleData.benefits?.items || [{ title: "", desc: "" }],
             },
-            
+
             contentSection: {
               image: singleData.contentSection?.image || "",
               title: singleData.contentSection?.title || "",
@@ -208,7 +205,6 @@ const UpdateService = ({ isDarkMode = false }) => {
           formData.bannerSection.bannerImage
         );
       }
-
 
       // Handle content section image
       if (formData.contentSection.image instanceof File) {
@@ -248,7 +244,7 @@ const UpdateService = ({ isDarkMode = false }) => {
             desc: item.desc,
           })),
         },
-      
+
         howItWorks: {
           title: formData.howItWorks.title,
           desc: formData.howItWorks.desc,
@@ -272,6 +268,7 @@ const UpdateService = ({ isDarkMode = false }) => {
       const { data } = await axios.put(
         `${baseUrl}/service/${id}`,
         formDataToSend,
+        { withCredentials: true },
         {
           headers: {
             "Content-Type": "multipart/form-data",

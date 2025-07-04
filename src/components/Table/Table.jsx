@@ -26,7 +26,7 @@ const Table = ({ data, columns, path, isDarkMode }) => {
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {
       pagination: {
-        pageSize: 7,
+        pageSize: 10,
       },
     },
   });

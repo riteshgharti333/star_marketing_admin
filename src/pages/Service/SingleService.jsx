@@ -35,14 +35,14 @@ const SingleService = ({ isDarkMode }) => {
 
   return (
     <div
-      className={`p-6 rounded-xl ${
+      className={`p-1 sm:p-6 rounded-xl ${
         isDarkMode ? "bg-gray-800" : "bg-white"
       } shadow-sm max-w-5xl mx-auto`}
     >
       {/* Header with back button */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-4 justify-between w-full">
-          <div className="flex items-center gap-3 justify-between w-full">
+          <div className="flex  flex-wrap items-center gap-3 justify-between w-full">
             <div className="flex items-center gap-3">
               <button
                 onClick={backPage}
@@ -82,16 +82,16 @@ const SingleService = ({ isDarkMode }) => {
         </div>
       </div>
       {/* Banner Section */}
-      <section className="py-12 px-4 text-center">
+      <section className="py-12 px-1 sm:px-4">
         <img
           src={bannerSection?.bannerImage}
           alt="Banner"
           className="mx-auto w-full mb-6 max-h-80 object-cover rounded-lg shadow"
         />
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">
+        <h1 className="text-2xl md:text-4xl font-bold mb-4">
           {bannerSection?.bannerTitle}
         </h1>
-        <p className="max-w-3xl mx-auto text-lg">{bannerSection?.bannerDesc}</p>
+        <p className=" mx-auto text-lg">{bannerSection?.bannerDesc}</p>
       </section>
 
       {/* Strategy */}
@@ -164,16 +164,16 @@ const SingleService = ({ isDarkMode }) => {
       </section>
 
       {/* Final CTA Section */}
-      <section className={`py-20 px-4 text-center ${isDarkMode ?  "bg-gray-900" : "bg-gray-100 " }`}>
+      <section
+        className={`py-20 px-4  ${isDarkMode ? "bg-gray-900" : "bg-gray-100 "}`}
+      >
         <img
           src={contentSection?.image}
           alt="Content"
-          className="mx-auto mb-6 h-48 object-contain"
+          className="mx-auto mb-6 w-[300px] h-[400px] rounded-2xl object-cover"
         />
-        <h2 className="text-3xl font-bold mb-4">{contentSection?.title}</h2>
-        <p className="max-w-2xl mx-auto text-gray-700">
-          {contentSection?.desc}
-        </p>
+        <h2 className="text-2xl font-bold mb-4">{contentSection?.title}</h2>
+        <p className=" mx-auto text-gray-700">{contentSection?.desc}</p>
       </section>
 
       {showDeleteModal && (

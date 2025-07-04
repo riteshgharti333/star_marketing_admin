@@ -19,11 +19,14 @@ const DeleteCard = ({
   const handleDelete = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.delete(`${baseUrl}/${path}/${deleteId}`);
+      const { data } = await axios.delete(`${baseUrl}/${path}/${deleteId}`, {
+        withCredentials: true,
+      });
 
       if (data && data.success) {
         toast.success("Deleted successfully");
         if (path === "review") {
+          navigate("/review");
         } else if (path === "project") {
           navigate("/project");
         } else if (path === "service") {

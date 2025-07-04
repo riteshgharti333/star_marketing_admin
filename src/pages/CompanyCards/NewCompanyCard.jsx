@@ -13,8 +13,8 @@ const NewCompanyCard = ({ isDarkMode }) => {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
-  const [loading , setLoading] = useState(false);
-    
+  const [loading, setLoading] = useState(false);
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -29,7 +29,7 @@ const NewCompanyCard = ({ isDarkMode }) => {
       return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
     const formData = new FormData();
     formData.append("image", selectedImage);
@@ -38,6 +38,7 @@ const NewCompanyCard = ({ isDarkMode }) => {
       const { data } = await axios.post(
         `${baseUrl}/company-card/new-company-card`,
         formData,
+        { withCredentials: true },
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -52,8 +53,8 @@ const NewCompanyCard = ({ isDarkMode }) => {
     } catch (error) {
       console.error("Upload error:", error);
       toast.error(error.response.data.message);
-    }finally{
-       setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -163,7 +164,11 @@ const NewCompanyCard = ({ isDarkMode }) => {
           <span>Add Image</span>
         </button>
 
-        <button className={`btn-primary`} disabled={loading} onClick={handleSubmit}>
+        <button
+          className={`btn-primary`}
+          disabled={loading}
+          onClick={handleSubmit}
+        >
           <span>{loading ? "Uploading..." : "Upload"}</span>
         </button>
       </div>

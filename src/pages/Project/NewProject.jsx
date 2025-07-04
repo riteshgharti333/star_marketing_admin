@@ -66,6 +66,7 @@ const NewProject = ({ isDarkMode }) => {
       const { data } = await axios.post(
         `${baseUrl}/project/new-project`,
         formData,
+        { withCredentials: true },
         {
           headers: {
             "Content-Type": "multipart/form-data",

@@ -1,26 +1,43 @@
+import { useState } from "react";
+import { useEffect } from "react";
 import { FiUsers, FiMail } from "react-icons/fi";
+import { baseUrl } from "../../main";
+import axios from "axios";
 
 const Dashboard = ({ isDarkMode }) => {
   // Dummy data
+
+  const [contactData, setContactData] = useState([]);
+
+  useEffect(() => {
+    const contactAllData = async () => {
+      const { data } = await axios.get(`${baseUrl}/contact/all-contacts`);
+      if (data && data.success) {
+        setContactData(data?.contacts?.length);
+      }
+    };
+    contactAllData();
+  }, []);
+
   const stats = {
-    visitors: {
-      count: 300,
-      label: "Total Visitors",
-      change: "+12% from last month",
-      icon: <FiUsers className="text-blue-500" size={24} />,
-      color: "blue",
-    },
+    // visitors: {
+    //   count: 300,
+    //   label: "Total Visitors",
+    //   change: "+12% from last month",
+    //   icon: <FiUsers className="text-blue-500" size={24} />,
+    //   color: "blue",
+    // },
     contacts: {
-      count: 4,
+      count: contactData,
       label: "New Contacts",
-      change: "+2 today",
+      // change: "+2 today",
       icon: <FiMail className="text-green-500" size={24} />,
       color: "green",
     },
   };
 
   return (
-    <div className={`p-6 ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}>
+    <div className="">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {Object.values(stats).map((stat, index) => (
           <div

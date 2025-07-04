@@ -5,6 +5,7 @@ import {
   FiBell,
   FiSearch,
   FiMenu,
+  FiLogIn,
 } from "react-icons/fi";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -22,10 +23,8 @@ const Navbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-   
-
     try {
-      const { data } = await axios.post(`${baseUrl}/auth/logout`, {
+      const { data } = await axios.post(`${baseUrl}/auth/logout`, null, {
         withCredentials: true,
       });
 
@@ -58,42 +57,44 @@ const Navbar = ({ toggleSidebar }) => {
         >
           <FiMenu size={20} />
         </button>
-        <Link
-          to={"/profile"}
-          className="flex items-center space-x-3 cursor-pointer"
-        >
-          <div className="relative">
-            <div
-              className={`w-10 h-10 rounded-full ${
-                isDarkMode ? "bg-gray-700" : "bg-blue-50"
-              } flex items-center justify-center ${
-                isDarkMode ? "text-white" : "text-[#2671fe]"
-              } font-semibold`}
-            >
-              {user?.user?.name
-                ?.split(" ")
-                .map((n) => n[0])
-                .join("")}
+        {user?.user && (
+          <Link
+            to={"/profile"}
+            className="flex items-center space-x-3 cursor-pointer"
+          >
+            <div className="relative">
+              <div
+                className={`w-10 h-10 rounded-full ${
+                  isDarkMode ? "bg-gray-700" : "bg-blue-50"
+                } flex items-center justify-center ${
+                  isDarkMode ? "text-white" : "text-[#2671fe]"
+                } font-semibold`}
+              >
+                {user?.user?.name
+                  ?.split(" ")
+                  .map((n) => n[0])
+                  .join("")}
+              </div>
+              <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-white dark:border-gray-900 rounded-full"></span>
             </div>
-            <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-white dark:border-gray-900 rounded-full"></span>
-          </div>
-          <div className="hidden min-[480px]:block">
-            <p
-              className={`text-sm font-semibold ${
-                isDarkMode ? "text-white" : "text-gray-800"
-              }`}
-            >
-              <p>{user?.user?.name}</p>
-            </p>
-            <p
-              className={`text-xs ${
-                isDarkMode ? "text-gray-400" : "text-gray-500"
-              }`}
-            >
-              Admin
-            </p>
-          </div>
-        </Link>
+            <div className="hidden min-[480px]:block">
+              <p
+                className={`text-sm font-semibold ${
+                  isDarkMode ? "text-white" : "text-gray-800"
+                }`}
+              >
+                <p>{user?.user?.name}</p>
+              </p>
+              <p
+                className={`text-xs ${
+                  isDarkMode ? "text-gray-400" : "text-gray-500"
+                }`}
+              >
+                {user?.user?.isAdmin ? "Admin" : ""}
+              </p>
+            </div>
+          </Link>
+        )}
       </div>
 
       {/* Right Section - Controls */}
@@ -109,20 +110,36 @@ const Navbar = ({ toggleSidebar }) => {
           {isDarkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
         </button>
 
-        <Link
-          to={"/login"}
-          onClick={handleLogout}
-          className={`p-2 rounded-lg flex items-center space-x-1 ${
-            isDarkMode
-              ? "hover:bg-gray-800 text-gray-400 hover:text-white"
-              : "hover:bg-gray-100 text-gray-500 hover:text-gray-800"
-          } transition-all duration-200`}
-        >
-          <FiLogOut size={20} />
-          <span className="hidden md:inline-block text-sm font-medium cursor-pointer">
-            Logout
-          </span>
-        </Link>
+        {user?.user ? (
+          <Link
+            to={"/login"}
+            onClick={handleLogout}
+            className={`p-2 rounded-lg flex items-center space-x-1 ${
+              isDarkMode
+                ? "hover:bg-gray-800 text-gray-400 hover:text-white"
+                : "hover:bg-gray-100 text-gray-500 hover:text-gray-800"
+            } transition-all duration-200`}
+          >
+            <FiLogOut size={20} />
+            <span className="hidden md:inline-block text-sm font-medium cursor-pointer">
+              Logout
+            </span>
+          </Link>
+        ) : (
+          <Link
+            to={"/login"}
+            className={`p-2 rounded-lg flex items-center space-x-1 ${
+              isDarkMode
+                ? "hover:bg-gray-800 text-gray-400 hover:text-white"
+                : "hover:bg-gray-100 text-gray-500 hover:text-gray-800"
+            } transition-all duration-200`}
+          >
+            <FiLogIn size={20} />
+            <span className="hidden md:inline-block text-sm font-medium cursor-pointer">
+              Login
+            </span>
+          </Link>
+        )}
       </div>
     </div>
   );

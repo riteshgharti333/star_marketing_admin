@@ -19,13 +19,13 @@ import { useBackPage } from "../../utils/backFunc";
 import { baseUrl } from "../../main";
 import axios from "axios";
 import { toast } from "sonner";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const NewService = ({ isDarkMode = false }) => {
   const backPage = useBackPage();
 
   const [loading, setLoading] = useState();
-  const navigate = useParams();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     bannerSection: {
@@ -197,14 +197,13 @@ const NewService = ({ isDarkMode = false }) => {
         },
       };
 
-      console.log(serviceData);
-
       formDataToSend.append("serviceData", JSON.stringify(serviceData));
 
       // API call
       const { data } = await axios.post(
         `${baseUrl}/service/new-service`,
         formDataToSend,
+        { withCredentials: true },
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -214,8 +213,8 @@ const NewService = ({ isDarkMode = false }) => {
 
       if (data && data.success) {
         toast.success(data.message);
-        navigate("/service");
-      } else  {
+        navigate(`/service/${data?.service?._id}`);
+      } else {
         toast.error(data.message);
       }
     } catch (error) {

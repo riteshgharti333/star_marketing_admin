@@ -3,7 +3,7 @@ import { FiArrowLeft, FiSave, FiUpload } from "react-icons/fi";
 import { useBackPage } from "../../utils/backFunc";
 import axios from "axios";
 import { baseUrl } from "../../main";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const NewReview = () => {
@@ -46,6 +46,7 @@ const NewReview = () => {
       const { data } = await axios.post(
         `${baseUrl}/review/new-review`,
         formData,
+        { withCredentials: true },
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -59,16 +60,14 @@ const NewReview = () => {
       }
     } catch (error) {
       console.error("Error submitting review:", error);
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div
-      className={`min-h-screen`}
-    >
+    <div className={`min-h-screen`}>
       <div
         className={`p-2 sm:p-6 rounded-xl ${
           isDarkMode ? "bg-gray-800" : "bg-white"

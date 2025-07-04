@@ -74,11 +74,16 @@ const UpdateProject = ({ isDarkMode }) => {
       formData.append("url", project.url);
       formData.append("image", fileInputRef.current.files[0]);
 
-      const { data } = await axios.put(`${baseUrl}/project/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const { data } = await axios.put(
+        `${baseUrl}/project/${id}`,
+        formData,
+        { withCredentials: true },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (data.success) {
         toast.success(data.message);
