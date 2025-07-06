@@ -37,7 +37,8 @@ function App() {
         isDarkMode ? "bg-gray-900 text-white" : "bg-[#f1f1f1] text-black"
       }`}
     >
-      <BrowserRouter basename="/admin">
+      <BrowserRouter>
+        {/* <BrowserRouter basename="/admin"> */}
         <Toaster position="top-center" richColors />
         <Routes>
           <Route path="/login" element={<Login isDarkMode={isDarkMode} />} />
