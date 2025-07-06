@@ -44,6 +44,7 @@ const Login = ({ isDarkMode }) => {
       }
     } catch (error) {
       dispatch({ type: "LOGIN_FAILURE" });
+      console.log(error)
       toast.error(
         error?.response?.data?.message || "Login failed. Please try again."
       );
